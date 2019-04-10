@@ -195,3 +195,22 @@
     | FUJII    | Develop    | Facebook  |
     | SHIMADA  | Develop    | Facebook  |
     | FUJIWARA | Develop    | Instagram |
+
+### 副問い合わせ
+
+1. 社員表の中から、`SHIMADA`さん(社員番号が`6`)よりも前に入社した社員の、社員名と入社日を検索せよ。
+
+    | ename  | hire_date  |
+    |---|---|
+    | TANAKA | 1990-10-23 |
+    | KIMURA | 1999-06-01 |
+    | SUZUKI | 2000-02-09 |
+    | IKEDA  | 2001-12-21 |
+    | YAMADA | 2004-07-18 |
+
+2. 社員表の中から、給料が全社員の平均給料よりも高い社員の人数を検索せよ。
+
+    | sum |
+    |---|
+    |   4 |
+

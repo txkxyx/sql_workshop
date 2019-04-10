@@ -123,4 +123,17 @@
     ```sql
     select ename, dname, pname from employee inner join department on employee.dno = department.dno inner join project on employee.pno = project.pno order by employee.dno desc, employee.pno asc;
     ```
-    
+
+## 副問い合わせ
+
+1. 社員表の中から、`SHIMADA`さん(社員番号が`6`)よりも前に入社した社員の、社員名と入社日を検索せよ。
+
+    ```sql
+    select ename, hire_date from employee where hire_date < (select hire_date from employee where eno = 6);
+    ```
+
+2. 社員表の中から、給料が全社員の平均給料よりも高い社員の人数を検索せよ。
+
+    ```sql
+    select count(*) as sum from employee where salary > (select avg(salary) from employee);
+    ```
