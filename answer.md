@@ -109,10 +109,10 @@
 1. 社員表から社員名と、所属している部署名を検索せよ。検索結果は部署番号が高い順に表示せよ。
 
     ```sql
-    select ename, dname from employee inner join department on employee.dno = department.dno order by dno asc;
+    select ename, dname from employee left join department on employee.dno = department.dno order by employee.dno desc;
     ```
 
-2. 社員表から社員名と、所属している部署名と、参画しているプロジェクト名を検索せよ。
+2. 社員表から社員名と、所属している部署名と、参画しているプロジェクト名を検索せよ。ただし社長は検索対象から外すこと。
 
     ```sql
     select ename, dname, pname from employee inner join department on employee.dno = department.dno inner join project on employee.pno = project.pno;
