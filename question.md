@@ -1,78 +1,101 @@
 # 追加問題
 
-ある会社の社員の管理と、プロジェクトの管理を行うデータベースを作成します。
-データベース名は`company`とします。
+ある会社の開発部の社員の管理と、プロジェクトの管理を行うデータベースを作成します。
+データベース名は`development`とします。
 
 ## データベース定義
 
-- 会社(company)
+- 会社(development)
 
     | データベース名(物理) | データベース名(論理) |
     |---|---|
-    | company | 会社 |
+    | development | 開発部 |
 
 ## テーブル定義
 
-- 部門(department)
+- 役割(m_role)
 
     | 列名(物理) | 列名(論理) | データ型　| 備考 |
     |---|---|---|---|
-    | dno | 部門番号 | int | PK |
-    | dname | 部門名 | varchar(10) | NN UK |
+    | rno | 役割番号 | int | PK |
+    | rname | 役割名 | varchar(10) | NN UK |
 
-- プロジェクト(project)
+- プロジェクト(m_project)
 
     | 列名(物理) | 列名(論理) | データ型　| 備考 |
     |---|---|---|---|
     | pno | プロジェクト番号 | int | PK |
     | pname | プロジェクト名 | varchar(20) | NN |
 
-- 社員(employee)
+- 社員(m_employee)
 
     | 列名(物理) | 列名(論理) | データ型　| 備考 |
     |---|---|---|---|
     | eno | 社員番号 | int | Primary Key |
     | ename | 社員名 | varchar(20) | NN |
-    | sex | 性別 | char(1)| CH(M:男性 W:女性) |
     | hire_date | 入社日 | date | |
     | salary | 給料 | int | |
-    | address | 住所 | varchar(10) | |
-    | dno | 部門番号 | int | FK:department(dno) |
-    | pno | プロジェクト番号 | int | FK:project(pno) |
+    | address | 住所 | varchar(20) | |
+
+- プロジェクト管理(t_project)
+
+    | 列名(物理) | 列名(論理) | データ型　| 備考 |
+    |---|---|---|---|
+    | id | 管理ID | int | PK 自動連番 |
+    | pno | プロジェクト番号 | int | FK:m_project(pno) |
+    | eno | 社員番号 | int | FK:m_employee(eno) |
+    | rno | 役割番号 | int | FK:m_role(rno) |
 
 ## データ定義
 
-- 部門(department)
+- 役職(m_role)
 
-    | dno | dname |
+    | rno | rname |
     |---|---|
-    | 10 | Develop |
-    | 20 | Management |
-    | 30 | Jinji |
-    | 40 | Eigyo |
+    | 10 | Project Manager |
+    | 20 | Project Leader |
+    | 30 | System Engineer |
+    | 40 | Programmer |
 
-- プロジェクト(project)
+- プロジェクト(m_project)
 
     | pno | pname |
     | --- | --- |
-    | 1 | Twitter |
-    | 2 | Facebook |
-    | 3 | Instagram |
+    | 1 | Web Application |
+    | 2 | iOS Application |
+    | 3 | Android Application |
 
-- 社員(employee)
+- 社員(m_employee)
 
-    | eno | ename | sex | hire_date | salary | address | dno | pno |
-    |---|---|---|---|---|---|---|---|
-    | 1 | TANAKA | M | 1990/10/23 | 400000 | OSAKA |  | |
-    | 2 | KIMURA | M | 1999/6/1 | 300000 | HYOGO | 10 | 1 |
-    | 3 | SUZUKI | W | 2000/2/9 | 340000 | OSAKA | 30 | 2 |
-    | 4 | IKEDA | M | 2001/12/21 | 290000 | HIROSHIMA | 20 | 1 |
-    | 5 | YAMADA | W | 2004/7/18 | 310000 | SHIGA | 40 | 3 |
-    | 6 | SHIMADA | M | 2005/10/16 | 270000 | KYOTO | 10 | 2 |
-    | 7 | AONO | W | 2007/11/26 | 290000 | KYOTO | 10 | 1 |
-    | 8 | FUJIWARA | M | 2010/8/13 | 250000 | OSAKA | 10 | 3 |
-    | 9 | FUJII | W | 2014/3/10 | 280000 | HYOGO | 10 | 2 |
-    | 10 | YAMAMOTO | M | 2015/1/7 | 240000 | KYOTO | 20 | 3 |
+    | eno | ename | hire_date | salary | address |
+    |---|---|---|---|---|
+    | 1 | TANAKA | 1990/10/23 | 400000 | Osaka |
+    | 2 | KIMURA | 1999/6/1 | 300000 | Hyogo |
+    | 3 | SUZUKI | 2000/2/9 | 340000 | Osaka |
+    | 4 | IKEDA | 2001/12/21 | 290000 | Okayama |
+    | 5 | YAMADA | 2004/7/18 | 310000 | Kyoto |
+    | 6 | SHIMADA | 2005/10/16 | 270000 | Hyogo |
+    | 7 | AONO | 2007/11/26 | 290000 | Kyoto |
+    | 8 | FUJIWARA | 2010/8/13 | 250000 | Osaka |
+    | 9 | FUJII | 2014/3/10 | 280000 | Okayama |
+    | 10 | YAMAMOTO | 2015/1/7 | 240000 | Kyoto |
+
+- プロジェクト管理(t_project)
+    | id |pno | eno | rno |
+    |---|---|---|---|
+    | 1 | 1 | 1 | 10 |
+    | 2 | 1 | 3 | 20 |
+    | 3 | 1 | 5 | 30 |
+    | 4 | 1 | 9 | 40 |
+    | 5 | 1 | 10 | 40 |
+    | 6 | 2 | 2 | 10 |
+    | 7 | 2 | 4 | 20 |
+    | 8 | 2 | 6 | 30 |
+    | 9 | 2 | 8 | 40 |
+    | 10 | 3 | 1 | 10 |
+    | 11 | 3 | 2 | 20 |
+    | 12 | 3 | 7 | 30 |
+    | 13 | 3 | 10 | 40 |
 
 ## 問題
 
@@ -90,11 +113,18 @@
 
 ### ソート・絞り込み
 
-1. 社員の中から部署に所属していない社員(社長)を検索せよ。
+1. 社員の中から2000年代に入社した社員を検索せよ。
 
-    | eno | ename | sex | hire_date | salary | address | dno | pno |
-    |---|---|---|---|---|---|---|---|
-    |   1 | TANAKA | M    | 1990-10-23 | 400000 | OSAKA   | NULL | NULL |
+    | eno | ename    | hire_date  | salary | address |
+    |---|---|---|---|
+    |   3 | SUZUKI   | 2000-02-09 | 340000 | Osaka   |
+    |   4 | IKEDA    | 2001-12-21 | 290000 | Okayama |
+    |   5 | YAMADA   | 2004-07-18 | 310000 | Kyoto   |
+    |   6 | SHIMADA  | 2005-10-16 | 270000 | Hyogo   |
+    |   7 | AONO     | 2007-11-26 | 290000 | Kyoto   |
+    |   8 | FUJIWARA | 2010-08-13 | 250000 | Osaka   |
+    |   9 | FUJII    | 2014-03-10 | 280000 | Okayama |
+    |  10 | YAMAMOTO | 2015-01-07 | 240000 | Kyoto   |
 
 2. 社員名に「A」を含む社員の社員名と給料を検索せよ。その際、給料の高い社員順に検索せよ。
 
@@ -107,95 +137,88 @@
     | SHIMADA  | 270000 |
     | FUJIWARA | 250000 |
 
-3. 社員の中から給料が`280000`以外の社員の名前、入社日、給料、部門番号を検索せよ。その際、部門番号は小さい順に並び替え、同じ部門番号の場合は入社日が新しい社員から並び替えて表示せよ。
+3. 社員の中から給料が`280000`以上の社員の名前、入社日、給料を検索せよ。その際、給料は昇順で並び替え、同じ給料の場合は入社日が新しい社員から並び替えて表示せよ。
 
-    | ename    | hire_date  | salary | dno  |
-    |---|---|---|---|
-    | TANAKA   | 1990-10-23 | 400000 | NULL |
-    | FUJII    | 2014-03-10 | 280000 |   10 |
-    | FUJIWARA | 2010-08-13 | 250000 |   10 |
-    | AONO     | 2007-11-26 | 290000 |   10 |
-    | SHIMADA  | 2005-10-16 | 270000 |   10 |
-    | KIMURA   | 1999-06-01 | 300000 |   10 |
-    | YAMAMOTO | 2015-01-07 | 240000 |   20 |
-    | IKEDA    | 2001-12-21 | 290000 |   20 |
-    | SUZUKI   | 2000-02-09 | 340000 |   30 |
-    | YAMADA   | 2004-07-18 | 310000 |   40 |
+    | ename    | hire_date  | salary |
+    |---|---|---|
+    | FUJII  | 2014-03-10 | 280000 |
+    | AONO   | 2007-11-26 | 290000 |
+    | IKEDA  | 2001-12-21 | 290000 |
+    | KIMURA | 1999-06-01 | 300000 |
+    | YAMADA | 2004-07-18 | 310000 |
+    | SUZUKI | 2000-02-09 | 340000 |
+    | TANAKA | 1990-10-23 | 400000 |
 
 ### 関数・グループ化
 
-1. 社員の中から、住所ごとの社員の人数を検索せよ。
+1. 社員の中から、2000年代に入社した社員の平均給料を検索せよ。
 
-    | address   | count |
+    | average     |
+    |---|
+    | 283750.0000 |
+
+2. 社員表から、住所ごとの給料の合計が`600000`以上の住所と給料の合計を検索せよ。
+
+    | address | sum_salary |
     |---|---|
-    | OSAKA     |     3 |
-    | HYOGO     |     2 |
-    | HIROSHIMA |     1 |
-    | SHIGA     |     1 |
-    | KYOTO     |     3 |
-
-
-2. 社員表から、部門ごとの給料の合計が`500000`以下の部門番号と給料の合計を検索せよ。ただし、社長のデータは含めないこと。
-
-    | dno  | sum    |
-    |---|---|
-    |   30 | 340000 |
-    |   40 | 310000 |
-
-3. 社員表から、部門が`Develop`に所属している社員データから、各住所の性別ごとの給料の合計を検索せよ。検索結果は住所ごとにまとめ、同じ住所の場合は給料の合計が高い順に並び替えよ。
-
-    | address | sex  | sum    |
-    |---|---|---|
-    | HYOGO   | M    | 300000 |
-    | HYOGO   | W    | 280000 |
-    | KYOTO   | W    | 290000 |
-    | KYOTO   | M    | 270000 |
-    | OSAKA   | M    | 250000 |
+    | Kyoto   |     840000 |
+    | Osaka   |     990000 |
 
 ### 結合
 
-1. 社員表から社員名と、所属している部署名を検索せよ。検索結果は部署番号が高い順に表示せよ。
+1. 社員表とプロジェクト管理表から、プロジェクト番号と社員名の一覧を検索せよ。またプロジェクト番号が高い順に表示せよ。
 
-    | ename    | dname      |
+    | pno  | ename    |
     |---|---|
-    | YAMADA   | Eigyo      |
-    | SUZUKI   | Jinji      |
-    | YAMAMOTO | Management |
-    | IKEDA    | Management |
-    | KIMURA   | Develop    |
-    | FUJIWARA | Develop    |
-    | SHIMADA  | Develop    |
-    | FUJII    | Develop    |
-    | AONO     | Develop    |
-    | TANAKA   | NULL       |
+    |    3 | AONO     |
+    |    3 | TANAKA   |
+    |    3 | YAMAMOTO |
+    |    3 | KIMURA   |
+    |    2 | SHIMADA  |
+    |    2 | IKEDA    |
+    |    2 | FUJIWARA |
+    |    2 | KIMURA   |
+    |    1 | TANAKA   |
+    |    1 | YAMAMOTO |
+    |    1 | SUZUKI   |
+    |    1 | YAMADA   |
+    |    1 | FUJII    |
 
-2. 社員表から社員名と、所属している部署名と、参画しているプロジェクト名を検索せよ。ただし社長は検索対象から外すこと。
+2. 1.の結果から、プロジェクト番号をプロジェクト名に変えて表示せよ。
 
-    | ename    | dname      | pname     |
+    | pname               | ename    |
+    |---|---|
+    | Android Application | TANAKA   |
+    | Android Application | YAMAMOTO |
+    | Android Application | AONO     |
+    | Android Application | KIMURA   |
+    | iOS Application     | FUJIWARA |
+    | iOS Application     | SHIMADA  |
+    | iOS Application     | IKEDA    |
+    | iOS Application     | KIMURA   |
+    | Web Application     | SUZUKI   |
+    | Web Application     | TANAKA   |
+    | Web Application     | YAMAMOTO |
+    | Web Application     | FUJII    |
+    | Web Application     | YAMADA   |
+
+3. 全てのプロジェクトにおいて、プロジェクトごとの社員名とその役割名の一覧を検索せよ。さらに、プロジェクトの並び順はプロジェクト番号が高い順で、役割の並び順は役割番号が低い順に表示せよ。
+
+    | pname               | ename    | rname           |
     |---|---|---|
-    | KIMURA   | Develop    | Twitter   |
-    | IKEDA    | Management | Twitter   |
-    | AONO     | Develop    | Twitter   |
-    | SUZUKI   | Jinji      | Facebook  |
-    | SHIMADA  | Develop    | Facebook  |
-    | FUJII    | Develop    | Facebook  |
-    | YAMADA   | Eigyo      | Instagram |
-    | FUJIWARA | Develop    | Instagram |
-    | YAMAMOTO | Management | Instagram |
-
-3. 2.の検索結果を部署番号が高い順に表示し、同じ部署の場合はプロジェクト番号が低い順に表示せよ。
-
-    | ename    | dname      | pname     |
-    |---|---|---|
-    | YAMADA   | Eigyo      | Instagram |
-    | SUZUKI   | Jinji      | Facebook  |
-    | IKEDA    | Management | Twitter   |
-    | YAMAMOTO | Management | Instagram |
-    | KIMURA   | Develop    | Twitter   |
-    | AONO     | Develop    | Twitter   |
-    | FUJII    | Develop    | Facebook  |
-    | SHIMADA  | Develop    | Facebook  |
-    | FUJIWARA | Develop    | Instagram |
+    | Android Application | TANAKA   | Project Manager |
+    | Android Application | KIMURA   | Project Leader  |
+    | Android Application | AONO     | System Engineer |
+    | Android Application | YAMAMOTO | Programmer      |
+    | iOS Application     | KIMURA   | Project Manager |
+    | iOS Application     | IKEDA    | Project Leader  |
+    | iOS Application     | SHIMADA  | System Engineer |
+    | iOS Application     | FUJIWARA | Programmer      |
+    | Web Application     | TANAKA   | Project Manager |
+    | Web Application     | SUZUKI   | Project Leader  |
+    | Web Application     | YAMADA   | System Engineer |
+    | Web Application     | YAMAMOTO | Programmer      |
+    | Web Application     | FUJII    | Programmer      |
 
 ### 副問い合わせ
 

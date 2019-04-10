@@ -5,8 +5,8 @@
 1. データベースを作成せよ。
 
     ```sql
-    create database company;
-    use company
+    create database development;
+    use development
     ```
 
 ## テーブル作成
@@ -14,27 +14,32 @@
 1. テーブル定義を満たすDDLを作成せよ。
 
     ```sql
-    create table department (
-        dno int primary key,
-        dname varchar(10) unique not null
+    create table m_role (
+        rno int primary key,
+        rname varchar(50) unique not null
     );
 
-    create table project(
+    create table m_project(
         pno int primary key,
-        pname varchar(20) not null
+        pname varchar(50) not null
     );
 
-    create table employee(
+    create table m_employee(
         eno int primary key,
         ename varchar(20) not null,
-        sex char(1) check(sex in ('W','M')),
         hire_date date,
         salary int,
-        address varchar(10),
-        dno int ,
-        pno int ,
-        foreign key (dno) references department(dno),
-        foreign key (pno) references project(pno)
+        address varchar(20)
+    );
+
+    create table t_project(
+        id int primary key auto_increment,
+        pno int,
+        eno int,
+        rno int,
+        foreign key (pno) references m_project(pno),
+        foreign key (eno) references m_employee(eno),
+        foreign key (rno) references m_role(rno)
     );
     ```
 
@@ -43,85 +48,95 @@
 1. データ定義に記載されているレコードを作成するDMLを作成せよ。
 
     ```sql
-    insert into department(dno,dname) values (10,'Develop');
-    insert into department(dno,dname) values (20,'Management');
-    insert into department(dno,dname) values (30,'Jinji');
-    insert into department(dno,dname) values (40,'Eigyo');
+    insert into m_role(rno,rname) values (10,'Project Manager');
+    insert into m_role(rno,rname) values (20,'Project Leader');
+    insert into m_role(rno,rname) values (30,'System Engineer');
+    insert into m_role(rno,rname) values (40,'Programmer');
 
-    insert into project(pno,pname) values(1,'Twitter');
-    insert into project(pno,pname) values(2,'Facebook');
-    insert into project(pno,pname) values(3,'Instagram');
+    insert into m_project(pno,pname) values(1,'Web Application');
+    insert into m_project(pno,pname) values(2,'iOS Application');
+    insert into m_project(pno,pname) values(3,'Android Application');
 
-    insert into employee(eno,ename,sex,hire_date,salary,address,dno,pno) values (1,'TANAKA','M','1990/10/23',400000,'OSAKA',null,null);
-    insert into employee(eno,ename,sex,hire_date,salary,address,dno,pno) values (2,'KIMURA','M','1999/6/1',300000,'HYOGO',10,1);
-    insert into employee(eno,ename,sex,hire_date,salary,address,dno,pno) values (3,'SUZUKI','W','2000/2/9',340000,'OSAKA',30,2);
-    insert into employee(eno,ename,sex,hire_date,salary,address,dno,pno) values (4,'IKEDA','M','2001/12/21',290000,'HIROSHIMA',20,1);
-    insert into employee(eno,ename,sex,hire_date,salary,address,dno,pno) values (5,'YAMADA','W','2004/7/18',310000,'SHIGA',40,3);
-    insert into employee(eno,ename,sex,hire_date,salary,address,dno,pno) values (6,'SHIMADA','M','2005/10/16',270000,'KYOTO',10,2);
-    insert into employee(eno,ename,sex,hire_date,salary,address,dno,pno) values (7,'AONO','W','2007/11/26',290000,'KYOTO',10,1);
-    insert into employee(eno,ename,sex,hire_date,salary,address,dno,pno) values (8,'FUJIWARA','M','2010/8/13',250000,'OSAKA',10,3);
-    insert into employee(eno,ename,sex,hire_date,salary,address,dno,pno) values (9,'FUJII','W','2014/3/10',280000,'HYOGO',10,2);
-    insert into employee(eno,ename,sex,hire_date,salary,address,dno,pno) values (10,'YAMAMOTO','M','2015/1/7',240000,'KYOTO',20,3);
+    insert into m_employee(eno,ename,hire_date,salary,address) values (1,'TANAKA','1990/10/23',400000,'Osaka');
+    insert into m_employee(eno,ename,hire_date,salary,address) values (2,'KIMURA','1999/6/1',300000,'Hyogo');
+    insert into m_employee(eno,ename,hire_date,salary,address) values (3,'SUZUKI','2000/2/9',340000,'Osaka');
+    insert into m_employee(eno,ename,hire_date,salary,address) values (4,'IKEDA','2001/12/21',290000,'Okayama');
+    insert into m_employee(eno,ename,hire_date,salary,address) values (5,'YAMADA','2004/7/18',310000,'Kyoto');
+    insert into m_employee(eno,ename,hire_date,salary,address) values (6,'SHIMADA','2005/10/16',270000,'Hyogo');
+    insert into m_employee(eno,ename,hire_date,salary,address) values (7,'AONO','2007/11/26',290000,'Kyoto');
+    insert into m_employee(eno,ename,hire_date,salary,address) values (8,'FUJIWARA','2010/8/13',250000,'Osaka');
+    insert into m_employee(eno,ename,hire_date,salary,address) values (9,'FUJII','2014/3/10',280000,'Okayama');
+    insert into m_employee(eno,ename,hire_date,salary,address) values (10,'YAMAMOTO','2015/1/7',240000,'Kyoto');
+
+    insert into t_project(pno,eno,rno) values (1,1,10);
+    insert into t_project(pno,eno,rno) values (1,3,20);
+    insert into t_project(pno,eno,rno) values (1,5,30);
+    insert into t_project(pno,eno,rno) values (1,9,40);
+    insert into t_project(pno,eno,rno) values (1,10,40);
+    insert into t_project(pno,eno,rno) values (2,2,10);
+    insert into t_project(pno,eno,rno) values (2,4,20);
+    insert into t_project(pno,eno,rno) values (2,6,30);
+    insert into t_project(pno,eno,rno) values (2,8,40);
+    insert into t_project(pno,eno,rno) values (3,1,10);
+    insert into t_project(pno,eno,rno) values (3,2,20);
+    insert into t_project(pno,eno,rno) values (3,7,30);
+    insert into t_project(pno,eno,rno) values (3,10,40);
     ```
 
 ## ソート・絞り込み
 
-1. 社員の中から部署に所属していない社員(社長)を検索せよ。
+1. 社員の中から2000年代に入社した社員を検索せよ。
 
     ```sql
-    select * from employee where dno is null;
+    select * from m_employee where hire_date >= '2000/1/1';
+    select * from m_employee where hire_date > '20%';
     ```
 
 2. 社員名に`A`を含む社員の社員名と給料を検索せよ。その際、給料の高い社員順に検索せよ。
 
     ```sql
-    select ename, salary from employee where ename like '%A' order by salary desc;
+    select ename, salary from m_employee where ename like '%A' order by salary desc;
     ```
 
-3. 社員の中から給料が`280000`以外の社員の名前、入社日、給料、部門番号を検索せよ。その際、部門番号は小さい順に並び替え、同じ部門番号の場合は入社日が新しい社員から並び替えて表示せよ。
+3. 社員の中から給料が`280000`以上の社員の名前、入社日、給料を検索せよ。その際、給料は昇順で並び替え、同じ給料の場合は入社日が新しい社員から並び替えて表示せよ。
 
     ```sql
-    select ename, hire_date, salary, dno from employee order by dno asc, hire_date desc;
+    select ename, hire_date, salary from m_employee where salary >= 280000 order by salary asc, hire_date desc;
     ```
 
 ## 関数・グループ化
 
-1. 社員の中から、住所ごとの社員の人数を検索せよ。
+1. 社員の中から、2000年代に入社した社員の平均給料を検索せよ。
 
     ```sql
-    select address, count(*) as count from employee group by address;
+    select avg(salary) as average from m_employee where hire_date >= '2000/1/1';
+    select avg(salary) as average from m_employee where hire_date > '20%';
     ```
 
-2. 社員表から、部門ごとの給料の合計が`500000`以下の部門番号と給料の合計を検索せよ。ただし、社長のデータは含めないこと。
+2. 社員表から、住所ごとの給料の合計が`600000`以上の住所と給料の合計を検索せよ。
 
     ```sql
-    select dno, sum(salary) as sum from employee group by dno having sum <= 500000 and dno is not null;
-    ```
-
-3. 社員表から、部門が`Develop`に所属している社員データから、各住所の性別ごとの給料の合計を検索せよ。検索結果は住所ごとにまとめ、同じ住所の場合は給料の合計が高い順に並び替えよ。
-
-    ```sql
-    select address, sex, sum(salary) as sum from employee where dno = 10 group by address, sex order by address, sum desc;
+    select address, sum(salary) as sum_salary from m_employee group by address having sum_salary > 600000;
     ```
 
 ## 結合
 
-1. 社員表から社員名と、所属している部署名を検索せよ。検索結果は部署番号が高い順に表示せよ。
+1. 社員表とプロジェクト管理表から、プロジェクト番号と社員名の一覧を検索せよ。またプロジェクト番号が高い順に表示せよ。
 
     ```sql
-    select ename, dname from employee left join department on employee.dno = department.dno order by employee.dno desc;
+    select pno, ename from m_employee inner join t_project on m_employee.eno = t_project.eno order by pno desc;
     ```
 
-2. 社員表から社員名と、所属している部署名と、参画しているプロジェクト名を検索せよ。ただし社長は検索対象から外すこと。
+2. 1.の結果から、プロジェクト番号をプロジェクト名に変えて表示せよ。
 
     ```sql
-    select ename, dname, pname from employee inner join department on employee.dno = department.dno inner join project on employee.pno = project.pno;
+    select pname, ename from t_project inner join m_employee on t_project.eno = m_employee.eno inner join m_project on t_project.pno = m_project.pno order by t_project.pno desc;
     ```
 
-3. 2.の検索結果を部署番号が高い順に表示し、同じ部署の場合はプロジェクト番号が低い順に表示せよ。
+3. 全てのプロジェクトにおいて、プロジェクトごとの社員名とその役割名の一覧を検索せよ。さらに、プロジェクトの並び順はプロジェクト番号が高い順で、役割の並び順は役割番号が低い順に表示せよ。
 
     ```sql
-    select ename, dname, pname from employee inner join department on employee.dno = department.dno inner join project on employee.pno = project.pno order by employee.dno desc, employee.pno asc;
+    select pname, ename, rname from t_project join m_employee on t_project.eno = m_employee.eno inner join m_project on t_project.pno = m_project.pno inner join m_role on t_project.rno = m_role.rno order by t_project.pno desc, t_project.rno asc;
     ```
 
 ## 副問い合わせ
@@ -129,11 +144,11 @@
 1. 社員表の中から、`SHIMADA`さん(社員番号が`6`)よりも前に入社した社員の、社員名と入社日を検索せよ。
 
     ```sql
-    select ename, hire_date from employee where hire_date < (select hire_date from employee where eno = 6);
+    select ename, hire_date from m_employee where hire_date < (select hire_date from m_employee where eno = 6);
     ```
 
 2. 社員表の中から、給料が全社員の平均給料よりも高い社員の人数を検索せよ。
 
     ```sql
-    select count(*) as sum from employee where salary > (select avg(salary) from employee);
+    select count(*) as sum from m_employee where salary > (select avg(salary) from m_employee);
     ```
