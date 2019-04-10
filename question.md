@@ -62,7 +62,7 @@
 - 社員(employee)
 
     | eno | ename | sex | hire_date | salary | address | dno | pno |
-    |---|---|---|---|---|---|---|---|---|
+    |---|---|---|---|---|---|---|---|
     | 1 | TANAKA | M | 1990/10/23 | 400000 | OSAKA |  | |
     | 2 | KIMURA | M | 1999/6/1 | 300000 | HYOGO | 10 | 1 |
     | 3 | SUZUKI | W | 2000/2/9 | 340000 | OSAKA | 30 | 2 |
@@ -195,5 +195,3 @@
     | FUJII    | Develop    | Facebook  |
     | SHIMADA  | Develop    | Facebook  |
     | FUJIWARA | Develop    | Instagram |
-
-
