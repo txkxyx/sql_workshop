@@ -18,14 +18,14 @@
     | 列名(物理) | 列名(論理) | データ型　| 備考 |
     |---|---|---|---|
     | rno | 役割番号 | int | PK |
-    | rname | 役割名 | varchar(10) | NN UK |
+    | rname | 役割名 | varchar(50) | NN UK |
 
 - プロジェクト(m_project)
 
     | 列名(物理) | 列名(論理) | データ型　| 備考 |
     |---|---|---|---|
     | pno | プロジェクト番号 | int | PK |
-    | pname | プロジェクト名 | varchar(20) | NN |
+    | pname | プロジェクト名 | varchar(50) | NN |
 
 - 社員(m_employee)
 
