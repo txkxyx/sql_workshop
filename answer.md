@@ -89,7 +89,6 @@
 
     ```sql
     select * from m_employee where hire_date >= '2000/1/1';
-    select * from m_employee where hire_date > '20%';
     ```
 
 2. 社員名に`A`を含む社員の社員名と給料を検索せよ。その際、給料の高い社員順に検索せよ。
@@ -110,7 +109,6 @@
 
     ```sql
     select avg(salary) as average from m_employee where hire_date >= '2000/1/1';
-    select avg(salary) as average from m_employee where hire_date > '20%';
     ```
 
 2. 社員表から、住所ごとの給料の合計が`600000`以上の住所と給料の合計を検索せよ。
